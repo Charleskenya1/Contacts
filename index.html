@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="title">Hello World! </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NEXUS WhatsApp Bots Deployment Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Deploy NEXUS and NEXUS-XMD WhatsApp bots easily on Heroku, Render, Railway, or download for Panel deployment.">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;400&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and base styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      height: 100%;
+      color: #fff;
+      background: #0f2027; /* fallback for old browsers */
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* Live background - animated gradient */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -2;
+      background: linear-gradient(-45deg, #0f2027, #2c5364, #1a2980, #26d0ce, #ff512f, #dd2476);
+      background-size: 400% 400%;
+      animation: gradientBG 18s ease infinite;
+      filter: blur(0px);
+    }
+    @keyframes gradientBG {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    /* Glass morphism card */
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      background: rgba(36, 32, 56, 0.75);
+      border-radius: 24px;
+      box-shadow: 0 10px 40px 0 rgba(0,0,0,0.45);
+      padding: 40px 20px 30px 20px;
+      backdrop-filter: blur(7px);
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      color: #fffffc;
+      background: linear-gradient(90deg, #26d0ce 0%, #dd2476 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.header-desc {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 35px;
+      color: #b2d4ff;
+    }
+    .bot-section {
+      margin: 40px 0;
+      background: rgba(0,0,0,0.18);
+      border-radius: 18px;
+      box-shadow: 0 5px 12px 0 rgba(0,0,0,0.17);
+      padding: 32px 16px 24px 16px;
+      position: relative;
+    }
+    .bot-title {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #ffb347;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bot-desc {
+      font-size: 1.02rem;
+      margin-bottom: 22px;
+      color: #f1f1f1;
+    }
+    .buttons-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+    .action-btn {
+      min-width: 150px;
+      padding: 13px 18px;
+      border-radius: 9px;
+      border: none;
+      font-size: 1.07rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 2px 0;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.09);
+      transition: transform 0.14s, background 0.12s, box-shadow 0.12s;
+      background: linear-gradient(90deg, #26d0ce 0%, #25a7c7 100%);
+      color: #fff;
+      outline: none;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+    .action-btn.fork { background: linear-gradient(90deg, #ff512f 0%, #dd2476 100%); }
+    .action-btn.session { background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);}
+    .action-btn.deploy-heroku { background: linear-gradient(90deg, #7f7fd5 0%, #86a8e7 50%, #91eac9 100%);}
+    .action-btn.deploy-render { background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);}
+    .action-btn.deploy-railway { background: linear-gradient(90deg, #009fff 0%, #ec2f4b 100%);}
+    .action-btn.download { background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);}
+    .action-btn.panel { background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);}
+    .action-btn:hover {
+      filter: brightness(1.11) contrast(1.08);
+      box-shadow: 0 4px 20px 0 rgba(0,0,0,0.13);
+      transform: translateY(-3px) scale(1.035);
+    }
+    .repo-link {
+      color: #b3fffd;
+      text-decoration: underline;
+      font-size: 1rem;
+      margin-left: 6px;
+    }
+    @media (max-width: 650px) {
+      .container {
+        padding: 12px 1vw 20px 1vw;
+      }
+      .bot-section {
+        padding: 19px 3vw 18px 3vw;
+      }
+      .bot-title { font-size: 1.18rem; }
+      h1 { font-size: 1.5rem; }
+      .buttons-row { gap: 10px; }
+      .action-btn { min-width: 110px; font-size: 0.95rem; padding: 10px 8px;}
+    }
+    /* Neon glowing border animation for card */
+    .container {
+      box-shadow: 0 0 0 4px #26d0ce33, 0 8px 32px 0 #1a298066;
+      border: 2px solid transparent;
+      animation: neonBorder 2.1s infinite alternate;
+    }
+    @keyframes neonBorder {
+      from { box-shadow: 0 0 0 4px #26d0ce33, 0 8px 32px 0 #1a298066;}
+      to { box-shadow: 0 0 16px 8px #dd247644, 0 8px 32px 0 #ff512f44;}
+    }
+    /* Subtle animated background particles with canvas */
+    #bg-particles {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.90;
+    }
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 15px;
+      color: #b2d4ff;
+      font-size: 1rem;
+      margin-top: 35px;
+      letter-spacing: 0.2px;
+      opacity: 0.74;
+    }
+    .footer a {
+      color: #ffb347;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    /* Logo style (optional, can be replaced by your logo) */
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 11px;
+    }
+    .logo span {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ffb347;
+      filter: drop-shadow(0 2px 5px #26d0ce55);
+    }
+    .logo img {
+      width: 48px;
+      height: 48px;
+      margin-right: 12px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-particles"></canvas>
+<div class="container">
+  <div class="logo">
+    <img src="https://files.catbox.moe/24c37g.jpg" alt="NEXUS Logo" loading="lazy"/>
+    <span>NEXUS Bots Portal</span>
+  </div>
+  <h1>Deploy Your WhatsApp Bot Instantly</h1>
+  <p class="header-desc">
+    Effortlessly deploy and manage <b>NEXUS</b> & <b>NEXUS-XMD</b> WhatsApp bots. Choose your platform, get your session, and get started in seconds!
+  </p>
+
+  <!-- NEXUS Section -->
+  <div class="bot-section">
+    <div class="bot-title">NEXUS-AI <a class="repo-link" href="https://github.com/Pkdriller/NEXUS-AI" target="_blank">[Repo]</a></div>
+    <div class="bot-desc">
+      Powerful WhatsApp bot packed with features and easy deployments. <br>
+      <span style="color:#ffd200;">Recommended for instant cloud deployment.</span>
+    </div>
+    <div class="buttons-row">
+      <button class="action-btn fork" onclick="window.open('https://github.com/Pkdriller/NEXUS-AI/fork', '_blank')">Fork Repo</button>
+      <button class="action-btn session" onclick="window.open('https://nexus-qr-code-1-caxd.onrender.com/', '_blank')">Get Session</button>
+      <button class="action-btn deploy-heroku" onclick="window.open('https://heroku.com/deploy?template=https://github.com/Pkdriller/NEXUS-AI', '_blank')">Deploy on Heroku</button>
+      <button class="action-btn deploy-render" onclick="window.open('https://dashboard.render.com/blueprint?repo=https://github.com/Pkdriller/NEXUS-AI', '_blank')">Deploy on Render</button>
+      <button class="action-btn deploy-railway" onclick="window.open('https://railway.app/new/template/Ly1kMb?referralCode=Pkdriller', '_blank')">Deploy on Railway</button>
+    </div>
+  </div>
+
+  <!-- NEXUS-XMD Section -->
+  <div class="bot-section">
+    <div class="bot-title">NEXUS-XMD <a class="repo-link" href="https://github.com/Pkdriller/NEXUS-XMD" target="_blank">[Repo]</a></div>
+    <div class="bot-desc">
+      Versatile WhatsApp bot with advanced features and panel-ready builds.<br>
+      <span style="color:#ffd200;">Perfect for both cloud and panel deployments.</span>
+    </div>
+    <div class="buttons-row">
+      <button class="action-btn fork" onclick="window.open('https://github.com/Pkdriller/NEXUS-XMD/fork', '_blank')">Fork Repo</button>
+      <button class="action-btn deploy-heroku" onclick="window.open('https://heroku.com/deploy?template=https://github.com/Pkdriller/NEXUS-XMD', '_blank')">Deploy on Heroku</button>
+      <button class="action-btn download" onclick="window.open('https://github.com/Pkdriller/NEXUS-XMD/archive/refs/heads/main.zip', '_blank')">Download ZIP for Panel</button>
+      <button class="action-btn session" onclick="window.open('https://nexus-xmd-pair-site-am98.onrender.com/', '_blank')">Get Session1</button>
+      <button class="action-btn session" onclick="window.open('https://nexus-pair2.onrender.com/', '_blank')">Get Session2</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 <a href="https://github.com/Pkdriller" target="_blank">Pkdriller</a> • Made with ❤️ CLICK HERE TO CONTACT OWNER. <br>
+    Contact owner👉 <a href="https://contact-pkdriller-xty1.vercel.app/" target="_blank">Whatsapp</a> for instant reply.
+  </div>
+</div>
+<!-- Particle background script -->
+<script>
+  // Simple animated particles (not heavy, works on Vercel)
+  const canvas = document.getElementById('bg-particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function Particle() {
+    this.x = Math.random()*w;
+    this.y = Math.random()*h;
+    this.r = Math.random()*2.2 + 1.2;
+    this.dx = (Math.random()-0.5)*0.6;
+    this.dy = (Math.random()-0.5)*0.6;
+    this.color = ['#26d0ce','#ff512f','#43cea2','#dd2476','#ffd200','#25a7c7'][Math.floor(Math.random()*6)];
+  }
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+    for(let i=0;i<particles.length;i++) {
+      let p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 12;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if(p.x<0||p.x>w) p.dx*=-1;
+      if(p.y<0||p.y>h) p.dy*=-1;
+    }
+    requestAnimationFrame(draw);
+  }
+  function initParticles() {
+    let count = Math.floor(w*h/4800);
+    particles = [];
+    for(let i=0;i<count;i++) particles.push(new Particle());
+  }
+  window.addEventListener('resize',initParticles);
+  initParticles();
+  draw();
+</script>
+<!-- Quick Links Floating Menu -->
+<style>
+.quick-links-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.quick-links-btn {
+  background: linear-gradient(135deg, #26d0ce 20%, #dd2476 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 18px #0002;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.18s, transform 0.14s;
+}
+.quick-links-btn:hover { background: #26d0ce; transform: scale(1.09);}
+.quick-links-menu {
+  display: none;
+  flex-direction: column;
+  margin-bottom: 10px;
+  gap: 12px;
+  align-items: flex-end;
+}
+.quick-link-icon {
+  background: #222d;
+  color: #fff;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  text-decoration: none;
+  transition: background 0.16s, transform 0.13s;
+  box-shadow: 0 2px 8px #0002;
+}
+.quick-link-icon:hover { background: #26d0ce; transform: scale(1.12);}
+@media (max-width:600px) {
+  .quick-links-float { bottom: 16px; right: 16px;}
+  .quick-links-btn { width: 45px; height: 45px; font-size: 1.45rem;}
+  .quick-link-icon { width: 36px; height: 36px; font-size: 1.1rem;}
+}
+</style>
+<!-- Font Awesome for icons (if not already included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<div class="quick-links-float">
+  <div class="quick-links-menu" id="quickLinksMenu">
+    <a class="quick-link-icon" href="https://wa.me/+254794146821?text=hello_here_for_help_or_business_paid_services✉️" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a class="quick-link-icon" href="https://t.me/dev_pkdrillerbot" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+    <a class="quick-link-icon" href="benardwachira49@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a>
+    <a class="quick-link-icon" href="https://github.com/Pkdriller" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+    <a class="quick-link-icon" href="https://Pkdriller/yourtwitter" target="_blank" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+  </div>
+  <button class="quick-links-btn" id="quickLinksToggle" title="Quick Links"><i class="fas fa-link"></i></button>
+</div>
+<script>
+const btn = document.getElementById('quickLinksToggle');
+const menu = document.getElementById('quickLinksMenu');
+let menuOpen = false;
+btn.onclick = () => {
+  menuOpen = !menuOpen;
+  menu.style.display = menuOpen ? 'flex' : 'none';
+}
+document.addEventListener('click', function(e) {
+  if (!btn.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+    menuOpen = false;
+  }
+});
+</script>
+</body>
+</html>
